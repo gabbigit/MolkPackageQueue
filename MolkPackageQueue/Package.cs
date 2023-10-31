@@ -26,6 +26,6 @@ namespace MolkPackageQueue
 
     public class Payload 
     {
-        string empty = string.Empty; //Replace with a random name
+        string packageName = string.Empty; //Replace with a random name (string of letters) for each instance
     }
 }

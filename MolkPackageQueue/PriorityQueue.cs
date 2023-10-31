@@ -8,9 +8,9 @@ namespace MolkPackageQueue
 {
     public class PriorityQueue
     {
-        Queue<T> queueHigh = new Queue<T>();
-        Queue<T> queueMedium = new Queue<T>();
-        Queue<T> queueLow = new Queue<T>();
+        Queue<Package> queueHigh = new Queue<Package>();
+        Queue<Package> queueMedium = new Queue<Package>();
+        Queue<Package> queueLow = new Queue<Package>();
 
         public void Enqueue(Package package)
         {
