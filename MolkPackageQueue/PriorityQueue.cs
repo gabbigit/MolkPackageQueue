@@ -8,6 +8,7 @@ namespace MolkPackageQueue
 {
     public class PriorityQueue
     {
+        Queue<Package> mainQueue = new Queue<Package>();
         Queue<Package> queueHigh = new Queue<Package>();
         Queue<Package> queueMedium = new Queue<Package>();
         Queue<Package> queueLow = new Queue<Package>();
@@ -17,6 +18,8 @@ namespace MolkPackageQueue
 
         public void Enqueue(Package package)
         {
+            mainQueue.Enqueue(package);
+
             switch (package.Priority)
             {
                 case Priority.Low:
@@ -45,6 +48,12 @@ namespace MolkPackageQueue
         // handle dequeuing packages based on priority
         public Package Dequeue()
         {
+            if (mainQueue.Count == 0)
+            {
+                Console.WriteLine("Main Queue is empty.");
+                return null;
+            }
+
             if (queueHigh.Count > 0)
             {
                 return queueHigh.Dequeue();
