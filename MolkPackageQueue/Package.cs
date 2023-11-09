@@ -14,7 +14,7 @@ namespace MolkPackageQueue
         public Package(Priority priority)
         {
             Priority = priority;
-           // Payload = new Payload();
+            Payload = new Payload();
         }
         public Priority Priority { get; }
         public Payload Payload { get; }
@@ -29,34 +29,18 @@ namespace MolkPackageQueue
 
     public class Payload 
     {
-        //string packageName = string.Empty; //Replace with a random name (string of letters) for each instance // skapa en textgenerator
-        public string packageName { get; }
+       string packageName = string.Empty; //Replace with a random name (string of letters) for each instance // skapa en textgenerator
+       public string PackageName { get; }
 
-        public Payload(string packageName)
+        Random random = new Random();
+
+        private string GenerateRandomName()
         {
-            this.packageName = packageName;
-        }
-
-        public static List<Payload> LoadFromJsonFile(string filePath)
-        {
-            List<Payload> payloads = new List<Payload>();
-
-            try
-            {
-                string[] jsonLines = File.ReadAllLines(filePath);
-
-                foreach (string jsonLine in jsonLines)
-                {
-                    Payload payload = JsonConvert.DeserializeObject<Payload>(jsonLine);
-                    payloads.Add(payload);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Fel vid inläsning av JSON-fil: " + e.Message);
-            }
-
-            return payloads;
+            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return new string(Enumerable.Repeat(letters, 5)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
+
+   
 }

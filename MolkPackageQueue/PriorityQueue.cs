@@ -12,13 +12,62 @@ namespace MolkPackageQueue
         Queue<Package> queueMedium = new Queue<Package>();
         Queue<Package> queueLow = new Queue<Package>();
 
+        List<Package> incommingPackageList = new List<Package>();
+        List<Package> prioritizedOutgoingPackage = new List<Package>();
+
         public void Enqueue(Package package)
         {
-            // do stuff
+            switch (package.Priority)
+            {
+                case Priority.Low:
+                    queueLow.Enqueue(package);
+                    {
+                        incommingPackageList.Add(package);
+                        break;
+                    }
+                case Priority.Medium:
+                    queueMedium.Enqueue(package);
+                    {
+                        incommingPackageList.Add(package);
+                        break;
+                    }
+                case Priority.High:
+                    queueHigh.Enqueue(package);
+                    {
+                        incommingPackageList.Add(package);
+                        break;
+                    }
+                default: break;
+
+            }
         }
-        public void Dequeue(Package package)
+
+        // handle dequeuing packages based on priority
+        public Package Dequeue()
         {
-            // do stuff
+            if (queueHigh.Count > 0)
+            {
+                return queueHigh.Dequeue();
+            }
+            else if (queueMedium.Count > 0)
+            {
+                return queueMedium.Dequeue();
+            }
+            else if (queueLow.Count > 0)
+            {
+                return queueLow.Dequeue();
+            }
+
+            return null; // No packages to dequeue
+        }
+
+        public void PrintLogList(List<Package> packageList) 
+        {
+            foreach (var package in packageList)
+            {
+                Console.WriteLine($"Package: {package.Payload.PackageName}, Priority: {package.Priority}");
+            }
         }
     }
+    
 }
