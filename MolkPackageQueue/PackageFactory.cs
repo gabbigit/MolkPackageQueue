@@ -10,23 +10,26 @@ namespace MolkPackageQueue
     
     public class PackageFactory
     {
-        /// <summary>
-        /// Randomizes an int between 0,2
-        /// </summary>
-        /// <returns>Priority enum value low, medium or high</returns>
-        /// 
 
-        // Instead of creating a new Random instance every time GetRandomPriority() is called,
-        // it's better to have a single instance to avoid potential issues with random number generation.
+        // Instead of creating a new Random instance every time GetRandomPriority() is called, it's better to have a single instance to avoid potential issues with random number generation.
         Random randomizer = new Random();
         public Priority GetRandomPriority()
         { 
             return (Priority)randomizer.Next(0, 3);
-         }
+        }
 
-         public Package CreatePackage()
+        Random random = new Random();
+        public string GenerateRandomName()
+        {
+            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return new string(Enumerable.Repeat(letters, 5)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        Payload payload = new Payload();
+        public Package CreatePackage()
          {
-            return new Package(GetRandomPriority());
+            return new Package(GetRandomPriority(), GenerateRandomName());
          }
     }
     

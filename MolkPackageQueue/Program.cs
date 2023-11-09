@@ -4,6 +4,9 @@
     {
         static void Main(string[] args)
         {
+            Package test = new Package(Priority.Low);
+            Console.WriteLine($"Package {test} has {Priority.Low} priority");
+
             Console.WriteLine("Implement MPS");
 
             PriorityQueue prioqueue = new PriorityQueue();
@@ -30,9 +33,7 @@
                 // Handle the package and log
             }
 
-            // Print logs
-            prioqueue.PrintLogList(prioqueue.IncomingPackageList);
-            prioqueue.PrintLogList(prioqueue.PrioritizedOutgoingPackage);
+          
 
 
             // Instantiate the MPS-PriorityQueue

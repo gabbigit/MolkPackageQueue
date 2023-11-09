@@ -16,6 +16,7 @@ namespace MolkPackageQueue
             Priority = priority;
             Payload = new Payload();
         }
+     
         public Priority Priority { get; }
         public Payload Payload { get; }
     }
@@ -29,16 +30,18 @@ namespace MolkPackageQueue
 
     public class Payload 
     {
-       string packageName = string.Empty; //Replace with a random name (string of letters) for each instance // skapa en textgenerator
-       public string PackageName { get; }
 
         Random random = new Random();
-
         private string GenerateRandomName()
         {
             const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             return new string(Enumerable.Repeat(letters, 5)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        public string PackageName { get; }
+        public Payload()
+        {
+            PackageName = GenerateRandomName();
         }
     }
 

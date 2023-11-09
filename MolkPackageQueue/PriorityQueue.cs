@@ -63,10 +63,7 @@ namespace MolkPackageQueue
 
         public void PrintLogList(List<Package> packageList) 
         {
-            foreach (var package in packageList)
-            {
-                Console.WriteLine($"Package: {package.Payload.PackageName}, Priority: {package.Priority}");
-            }
+            
         }
     }
     
