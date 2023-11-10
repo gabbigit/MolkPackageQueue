@@ -13,9 +13,10 @@ namespace MolkPackageQueue
         Queue<Package> queueMedium = new Queue<Package>();
         Queue<Package> queueLow = new Queue<Package>();
 
-        List<Package> incommingPackageList = new List<Package>();
-        List<Package> prioritizedOutgoingPackage = new List<Package>();
-
+        // List<Package> incommingPackageList = new List<Package>();
+        //  List<Package> prioritizedOutgoingPackage = new List<Package>();
+        public List<Package> IncomingPackageList { get; private set; } = new List<Package>();
+        public List<Package> PrioritizedOutgoingPackage { get; private set; } = new List<Package>();
         public void Enqueue(Package package)
         {
             mainQueue.Enqueue(package);
@@ -24,28 +25,26 @@ namespace MolkPackageQueue
             {
                 case Priority.Low:
                     queueLow.Enqueue(package);
-                    {
-                        incommingPackageList.Add(package);
-                        break;
-                    }
+                    IncomingPackageList.Add(package);
+                    break;
                 case Priority.Medium:
                     queueMedium.Enqueue(package);
-                    {
-                        incommingPackageList.Add(package);
-                        break;
-                    }
+                    IncomingPackageList.Add(package);
+                    break;
                 case Priority.High:
                     queueHigh.Enqueue(package);
-                    {
-                        incommingPackageList.Add(package);
-                        break;
-                    }
-                default: break;
-
+                    IncomingPackageList.Add(package);
+                    break;
+                default:
+                    break;
             }
+
+            PrintCreatedPackageLog(IncomingPackageList);
+
         }
 
         // handle dequeuing packages based on priority
+
         public Package Dequeue()
         {
             if (mainQueue.Count == 0)
@@ -54,25 +53,41 @@ namespace MolkPackageQueue
                 return null;
             }
 
-            if (queueHigh.Count > 0)
+            Package package = mainQueue.Dequeue();
+
+            switch (package.Priority)
             {
-                return queueHigh.Dequeue();
+                case Priority.Low:
+                    return DequeueFromQueue(queueLow);
+                case Priority.Medium:
+                    return DequeueFromQueue(queueMedium);
+                case Priority.High:
+                    return DequeueFromQueue(queueHigh);
+                default:
+                    return null;
             }
-            else if (queueMedium.Count > 0)
+        }
+
+        private Package DequeueFromQueue(Queue<Package> queue)
+        {
+            if (queue.Count > 0)
             {
-                return queueMedium.Dequeue();
-            }
-            else if (queueLow.Count > 0)
-            {
-                return queueLow.Dequeue();
+                Package package = queue.Dequeue();
+                PrioritizedOutgoingPackage.Add(package);
+                return package;
             }
 
             return null; // No packages to dequeue
         }
 
-        public void PrintLogList(List<Package> packageList) 
+        public void PrintCreatedPackageLog(List<Package> packageList) 
         {
-            
+
+            Console.WriteLine("Log of Created Packages:");
+            foreach (var package in packageList)
+            {
+                Console.WriteLine($"Priority: {package.Priority}, Payload: {package.Payload.PackageName}");
+            }
         }
     }
     

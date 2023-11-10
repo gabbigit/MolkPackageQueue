@@ -16,9 +16,14 @@ namespace MolkPackageQueue
             Priority = priority;
             Payload = new Payload();
         }
-     
+
+        public Package(Priority priority, string packageName)
+        {
+            Priority = priority;
+            Payload = new Payload { PackageName = packageName };
+        }
         public Priority Priority { get; }
-        public Payload Payload { get; }
+        public Payload Payload { get; set; }
     }
 
     public enum Priority 
@@ -30,19 +35,9 @@ namespace MolkPackageQueue
 
     public class Payload 
     {
-
-        Random random = new Random();
-        private string GenerateRandomName()
-        {
-            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            return new string(Enumerable.Repeat(letters, 5)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-        public string PackageName { get; }
-        public Payload()
-        {
-            PackageName = GenerateRandomName();
-        }
+  
+        public string PackageName { get; set; }
+        
     }
 
    

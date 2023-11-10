@@ -26,10 +26,14 @@ namespace MolkPackageQueue
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        Payload payload = new Payload();
+        
         public Package CreatePackage()
          {
-            return new Package(GetRandomPriority(), GenerateRandomName());
+            Payload payload = new Payload();
+            return new Package(GetRandomPriority(), GenerateRandomName())
+            {
+                Payload = payload
+            };
          }
     }
     
